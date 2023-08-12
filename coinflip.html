@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coin Flip</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #guessOptions {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        #guessOptions label {
+            margin-right: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Coin Flip</h1>
+    <button id="flipButton">Flip the Coin</button>
+    <button id="refreshButton">Refresh and Wipe Data</button>
+    <p id="result"></p>
+    <p>Flips this session: <span id="flipCount">0</span></p>
+    <p>Heads: <span id="headsCount">0</span></p>
+    <p>Tails: <span id="tailsCount">0</span></p>
+    <div id="guessOptions">
+        <label><input type="radio" name="guess" value="Heads"> Heads</label>
+        <label><input type="radio" name="guess" value="Tails"> Tails</label>
+    </div>
+    <p id="guessResult"></p>
+    <p>Correct guesses: <span id="correctGuesses">0</span></p>
+    <p>Wrong guesses: <span id="wrongGuesses">0</span></p>
+
+    <script>
+        var flipCount = 0;
+        var headsCount = 0;
+        var tailsCount = 0;
+        var correctGuesses = 0;
+        var wrongGuesses = 0;
+
+        // Load counts from localStorage if available
+        if (localStorage.getItem("flipCount")) {
+            flipCount = parseInt(localStorage.getItem("flipCount"));
+            document.getElementById("flipCount").textContent = flipCount;
+        }
+        if (localStorage.getItem("headsCount")) {
+            headsCount = parseInt(localStorage.getItem("headsCount"));
+            document.getElementById("headsCount").textContent = headsCount;
+        }
+        if (localStorage.getItem("tailsCount")) {
+            tailsCount = parseInt(localStorage.getItem("tailsCount"));
+            document.getElementById("tailsCount").textContent = tailsCount;
+        }
+        if (localStorage.getItem("correctGuesses")) {
+            correctGuesses = parseInt(localStorage.getItem("correctGuesses"));
+            document.getElementById("correctGuesses").textContent = correctGuesses;
+        }
+        if (localStorage.getItem("wrongGuesses")) {
+            wrongGuesses = parseInt(localStorage.getItem("wrongGuesses"));
+            document.getElementById("wrongGuesses").textContent = wrongGuesses;
+        }
+
+        document.getElementById("flipButton").addEventListener("click", function() {
+            var randomNumber = Math.random();
+            var result = (randomNumber < 0.5) ? "Heads" : "Tails";
+            document.getElementById("result").innerHTML = "Result: " + result;
+
+            // Update flip count and outcome counts, and store in localStorage
+            flipCount++;
+            document.getElementById("flipCount").textContent = flipCount;
+            localStorage.setItem("flipCount", flipCount.toString());
+
+            if (result === "Heads") {
+                headsCount++;
+                document.getElementById("headsCount").textContent = headsCount;
+                localStorage.setItem("headsCount", headsCount.toString());
+            } else {
+                tailsCount++;
+                document.getElementById("tailsCount").textContent = tailsCount;
+                localStorage.setItem("tailsCount", tailsCount.toString());
+            }
+
+            // Check the guessed option
+            var selectedGuess = document.querySelector('input[name="guess"]:checked').value;
+            if (selectedGuess === result) {
+                correctGuesses++;
+                document.getElementById("guessResult").textContent = "Correct guess!";
+                document.getElementById("guessResult").style.color = "green";
+            } else {
+                wrongGuesses++;
+                document.getElementById("guessResult").textContent = "Wrong guess!";
+                document.getElementById("guessResult").style.color = "red";
+            }
+            document.getElementById("correctGuesses").textContent = correctGuesses;
+            document.getElementById("wrongGuesses").textContent = wrongGuesses;
+            localStorage.setItem("correctGuesses", correctGuesses.toString());
+            localStorage.setItem("wrongGuesses", wrongGuesses.toString());
+        });
+
+        // Clear localStorage and reset counts on refresh
+        document.getElementById("refreshButton").addEventListener("click", function() {
+            localStorage.clear();
+            flipCount = 0;
+            headsCount = 0;
+            tailsCount = 0;
+            correctGuesses = 0;
+            wrongGuesses = 0;
+            document.getElementById("flipCount").textContent = flipCount;
+            document.getElementById("headsCount").textContent = headsCount;
+            document.getElementById("tailsCount").textContent = tailsCount;
+            document.getElementById("correctGuesses").textContent = correctGuesses;
+            document.getElementById("wrongGuesses").textContent = wrongGuesses;
+            document.getElementById("guessResult").textContent = "";
+            document.getElementById("guessResult").style.color = "black";
+            document.querySelectorAll('input[name="guess"]').forEach(function(radio) {
+                radio.checked = false;
+            });
+        });
+
+        // Clear localStorage on page refresh
+        window.addEventListener("beforeunload", function() {
+            localStorage.clear();
+        });
+    </script>
+</body>
+</html>
