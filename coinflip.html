@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Coin Flip</title>
     <style>
@@ -7,31 +8,80 @@
             font-family: Arial, sans-serif;
             text-align: center;
         }
+
+        header {
+            background-color: #f2f2f2;
+            padding: 10px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        #githubButton {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        .section {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin: 20px;
+        }
+
         #guessOptions {
             display: flex;
             justify-content: center;
             margin-top: 20px;
         }
+
         #guessOptions label {
             margin-right: 15px;
         }
+
+        #flipButton,
+        #refreshButton {
+            padding: 10px 20px;
+            margin-top: 10px;
+        }
     </style>
 </head>
+
 <body>
-    <h1>Coin Flip</h1>
-    <button id="flipButton">Flip the Coin</button>
-    <button id="refreshButton">Refresh and Wipe Data</button>
-    <p id="result"></p>
-    <p>Flips this session: <span id="flipCount">0</span></p>
-    <p>Heads: <span id="headsCount">0</span></p>
-    <p>Tails: <span id="tailsCount">0</span></p>
-    <div id="guessOptions">
-        <label><input type="radio" name="guess" value="Heads"> Heads</label>
-        <label><input type="radio" name="guess" value="Tails"> Tails</label>
+    <header>
+        <h1>Coin Flip App</h1>
+        <p>Check out my other work: <a href="https://www.rea.media/webdesign/">Other Work</a></p>
+        <a id="githubButton" href="https://github.com/gooseontheloose" target="_blank">View on GitHub</a>
+    </header>
+    <div class="section">
+        <h2>Coin Flip</h2>
+        <button id="flipButton">Flip the Coin</button>
+        <button id="refreshButton">Refresh and Wipe Data</button>
+        <p id="result"></p>
+        <p>Flips this session: <span id="flipCount">0</span></p>
+        <p>Heads: <span id="headsCount">0</span></p>
+        <p>Tails: <span id="tailsCount">0</span></p>
     </div>
-    <p id="guessResult"></p>
-    <p>Correct guesses: <span id="correctGuesses">0</span></p>
-    <p>Wrong guesses: <span id="wrongGuesses">0</span></p>
+    <div class="section">
+        <h2>Guess</h2>
+        <div id="guessOptions">
+            <label><input type="radio" name="guess" value="Heads"> Heads</label>
+            <label><input type="radio" name="guess" value="Tails"> Tails</label>
+        </div>
+        <p id="guessResult"></p>
+        <p>Correct guesses: <span id="correctGuesses">0</span></p>
+        <p>Wrong guesses: <span id="wrongGuesses">0</span></p>
+    </div>
 
     <script>
         var flipCount = 0;
@@ -125,4 +175,5 @@
         });
     </script>
 </body>
+
 </html>
